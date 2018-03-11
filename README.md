@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NoSqlDb Key/Value Database (C++)
 ### A non-relational database for use in a source code repository is implemented in C++ using the facilities of the standard C++ Libraries and Visual Studio 2017. It also uses the C++ standard library's streams for all console I/O and new and delete for all heap-based memory management.
 
@@ -15,3 +16,7 @@
 1. support queries on the set of keys returned by a previous query3, e.g., an "and"ing of multiple queries. Also support queries on the union of results of one or more previous queries, e.g., an "or"ing of multiple queries.
 
 > Each package is accompanied with a test stub in which it is the piece of code used to test each package against different cases, and it is done independently.
+=======
+# NoSqlDb
+NoSqlDb Key/Value Database (C++)
+>>>>>>> 9076f669a8122d56b8d941a68fbbcb2a61f338cb
