@@ -1,0 +1,4 @@
+﻿  Test.cpp
+c:\users\topkoong\documents\visual studio 2017\projects\ood project1\test\test.h(686): warning C4715: 'testCreateProjectPackageStructure': not all control paths return a value
+  Test.vcxproj -> C:\Users\topkoong\Documents\Visual Studio 2017\Projects\OOD Project1\Debug\Test.exe
+  Test.vcxproj -> C:\Users\topkoong\Documents\Visual Studio 2017\Projects\OOD Project1\Debug\Test.pdb (Partial PDB)

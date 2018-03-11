@@ -1,0 +1,603 @@
+//#pragma once
+
+#include "../DbCore/DbCore.h"
+#include "../Queries/Queries.h"
+#include "../Persist/Persist.h"
+#include "../Utilities/StringUtilities/StringUtilities.h"
+#include <iostream>
+#include <functional>
+using namespace NoSqlDb;
+
+//----< reduce the number of characters to type >----------------------
+
+auto putLine = [](size_t n = 1, std::ostream& out = std::cout)
+{
+	Utilities::putline(n, out);
+};
+
+DbElement<PayLoad> createDateTimeElement()
+{
+	DbElement<PayLoad> dateTimeElem;
+	dateTimeElem.name("DateTime");
+	dateTimeElem.descrip("represents clock time");
+	dateTimeElem.dateTime(DateTime().now());
+	PayLoad pL;
+	pL.filePath("../DateTime");
+	pL.category().push_back("DateTime");
+	dateTimeElem.payLoad(pL);
+	showHeader();
+	showElem(dateTimeElem);
+	return dateTimeElem;
+}
+
+DbElement<PayLoad> createDbCoreElement()
+{
+	DbElement<PayLoad> dbCoreElem;
+	dbCoreElem.name("DbCore");
+	dbCoreElem.descrip("implements core NoSql database operations, but does not provide editing, querying, or persisting.");
+	dbCoreElem.dateTime(DateTime().now());
+	PayLoad pL2;
+	pL2.filePath("../DbCore");
+	pL2.category().push_back("DbCore");
+	dbCoreElem.payLoad(pL2);
+	showHeader();
+	showElem(dbCoreElem);
+	return dbCoreElem;
+}
+
+DbElement<PayLoad> createExecutiveElement()
+{
+	DbElement<PayLoad> executiveElem;
+	executiveElem.name("Executive");
+	executiveElem.descrip("demonstrate NoSqlDb requirements");
+	executiveElem.dateTime(DateTime().now());
+	PayLoad pL3;
+	pL3.filePath("../Executive");
+	pL3.category().push_back("Executive");
+	executiveElem.payLoad(pL3);
+	showHeader();
+	showElem(executiveElem);
+	return executiveElem;
+}
+
+DbElement<PayLoad> createPersistElement()
+{
+	DbElement<PayLoad> persistElem;
+	persistElem.name("Persist");
+	persistElem.descrip("store and retrieve NoSqlDb contents");
+	persistElem.dateTime(DateTime().now());
+	PayLoad pL4;
+	pL4.filePath("../Persist");
+	pL4.category().push_back("Persist");
+	persistElem.payLoad(pL4);
+	showHeader();
+	showElem(persistElem);
+	return persistElem;
+}
+
+DbElement<PayLoad> createQueryElement()
+{
+	DbElement<PayLoad> queriesElem;
+	queriesElem.name("Queries");
+	queriesElem.descrip("retrieve NoSqlDb contents");
+	queriesElem.dateTime(DateTime().now());
+	PayLoad pL5;
+	pL5.filePath("../Queries");
+	pL5.category().push_back("Queries");
+	queriesElem.payLoad(pL5);
+	showHeader();
+	showElem(queriesElem);
+	return queriesElem;
+}
+
+DbElement<PayLoad> createStringUtilitiesElement()
+{
+	DbElement<PayLoad> stringUtilitiesElem;
+	stringUtilitiesElem.name("StringUtilities");
+	stringUtilitiesElem.descrip("small, generally useful, helper classes");
+	stringUtilitiesElem.dateTime(DateTime().now());
+	PayLoad pL6;
+	pL6.filePath("../Utilities/StringUtilities");
+	pL6.category().push_back("Utilities");
+	stringUtilitiesElem.payLoad(pL6);
+	showHeader();
+	showElem(stringUtilitiesElem);
+	return stringUtilitiesElem;
+}
+
+DbElement<PayLoad> createTestElement()
+{
+	DbElement<PayLoad> testElem;
+	testElem.name("Test");
+	testElem.descrip("demonstrate NoSqlDb requirements");
+	testElem.dateTime(DateTime().now());
+	PayLoad pL7;
+	pL7.filePath("../Test");
+	pL7.category().push_back("Test");
+	testElem.payLoad(pL7);
+	showHeader();
+	showElem(testElem);
+	return testElem;
+}
+
+DbElement<PayLoad> createTestUtilities()
+{
+	DbElement<PayLoad> testUtilitiesElem;
+	testUtilitiesElem.name("TestUtilities");
+	testUtilitiesElem.descrip("provides single-user test harness");
+	testUtilitiesElem.dateTime(DateTime().now());
+	PayLoad pL8;
+	pL8.filePath("../Utilities/TestUtilities");
+	pL8.category().push_back("Utilities");
+	testUtilitiesElem.payLoad(pL8);
+	showHeader();
+	showElem(testUtilitiesElem);
+	return testUtilitiesElem;
+}
+
+DbElement<PayLoad> createXmlDocumentElement()
+{
+	DbElement<PayLoad> xmlDocumentElem;
+	xmlDocumentElem.name("XmlDocument");
+	xmlDocumentElem.descrip("a container of XmlElement nodes");
+	xmlDocumentElem.dateTime(DateTime().now());
+	PayLoad pL9;
+	pL9.filePath("../XmlDocument");
+	pL9.category().push_back("XmlDocument");
+	xmlDocumentElem.payLoad(pL9);
+	showHeader();
+	showElem(xmlDocumentElem);
+	return xmlDocumentElem;
+}
+
+DbElement<PayLoad> createXmlUtilitiesElement()
+{
+	DbElement<PayLoad> xmlUtilitiesElem;
+	xmlUtilitiesElem.name("XmlUtilities");
+	xmlUtilitiesElem.descrip("small, generally useful, helper classes");
+	xmlUtilitiesElem.dateTime(DateTime().now());
+	PayLoad pL10;
+	pL10.filePath("../XmlUtilities");
+	pL10.category().push_back("Utilities");
+	xmlUtilitiesElem.payLoad(pL10);
+	showHeader();
+	showElem(xmlUtilitiesElem);
+	return xmlUtilitiesElem;
+}
+
+DbCore<PayLoad> addChildrenToAllElements(DbCore<PayLoad> db)
+{
+	std::cout << "\n\n  after adding elements with keys: \n";
+	db.addChild("DateTime", "StringUtilities");
+	db.addChild("DbCore", "DateTime");
+	db.addChild("DbCore", "StringUtilities");
+	db.addChild("DbCore", "TestUtilities");
+	db.addChild("Executive", "TestUtilities");
+	db.addChild("Executive", "Test");
+	db.addChild("Persist", "DateTime");
+	db.addChild("Persist", "DbCore");
+	db.addChild("Persist", "TestUtilities");
+	db.addChild("Persist", "XmlDocument");
+	db.addChild("Persist", "XmlUtilities");
+	db.addChild("Persist", "StringUtilities");
+	db.addChild("Queries", "DbCore");
+	db.addChild("Queries", "TestUtilities");
+	db.addChild("Queries", "StringUtilities");
+	db.addChild("Test", "DbCore");
+	db.addChild("Test", "TestUtilities");
+	db.addChild("Test", "Queries");
+	db.addChild("Test", "Persist");
+	db.addChild("Test", "StringUtilities");
+	db.addChild("XmlUtilities", "XmlDocument");
+	putLine();
+	return db;
+}
+///////////////////////////////////////////////////////////////////////
+// DbProvider class
+// - provides mechanism to share a test database between test functions
+//   without explicitly passing as a function argument.
+
+class DbProvider
+{
+public:
+	DbCore<PayLoad>& db() { return db_; }
+private:
+	static DbCore<PayLoad> db_;
+};
+DbCore<PayLoad> DbProvider::db_;
+
+///////////////////////////////////////////////////////////////////////
+// test functions
+
+//----< demo requirement #1 >------------------------------------------
+
+bool testR1()
+{
+	Utilities::title("Demonstrating Requirement #1");
+	std::cout << "\n  " << typeid(std::function<bool()>).name()
+		<< ", declared in this function, "
+		<< "\n  is only valid for C++11 and later versions.";
+	putLine();
+	return true; // would not compile unless C++11
+}
+
+//----< demo requirement #2 >------------------------------------------
+
+bool testR2()
+{
+	Utilities::title("Demonstrating Requirement #2");
+	std::cout << "\n  A visual examination of all the submitted code "
+		<< "will show only\n  use of streams and operators new and delete.";
+	putLine();
+	return true;
+}
+
+//----< demo first part of requirement #3 >----------------------------
+
+bool testR3a()
+{
+	Utilities::title("Demonstrating Requirement #3a - creating DbElement");
+	std::cout << "\n\n  Creating a db element with key \"Fawcett\":\n";
+	DbCore<PayLoad> db;
+	DbProvider dbp;
+	dbp.db() = db;
+	if (db.contains("Fawcett"))
+	{
+		std::cout << "\n  we cannot insert the key named " << "Fawcett" << " to the db\n";
+		return false;
+	}
+	DbElement<PayLoad> demoElem;
+	demoElem.name("Jim");
+	demoElem.descrip("Instructor for CSE687");
+	demoElem.dateTime(DateTime().now());
+	PayLoad pL;
+	pL.filePath("C:/InsertDataDemo.txt");
+	pL.category().push_back("Instructor");
+	demoElem.payLoad(pL);
+	if (demoElem.name() != "Jim")
+		return false;
+	if (demoElem.descrip() != "Instructor for CSE687")
+		return false;
+	if (demoElem.dateTime().now() != DateTime().now())
+		return false;
+	if (demoElem.payLoad().filePath() != "C:/InsertDataDemo.txt")
+		return false;
+	if (!(std::find(demoElem.payLoad().category().begin(), demoElem.payLoad().category().end(), "Instructor") != demoElem.payLoad().category().end()))
+		return false;
+	showHeader();
+	showElem(demoElem);
+	db["Fawcett"] = demoElem;
+	dbp.db() = db;
+	putLine();
+	return true;
+}
+
+bool testR3b()
+{
+	Utilities::title("Demonstrating Requirement #3b&4a - creating DbCore and adding element with key");
+	DbProvider dbp;
+	DbCore<PayLoad> db = dbp.db();
+	DbElement<PayLoad> demoElem = db["Fawcett"];
+	demoElem.name("Ammar");
+	demoElem.descrip("TA for CSE687");
+	PayLoad pL;
+	pL.filePath("C:/AdditionKVDemo.txt");
+	pL.category().push_back("TA");
+	demoElem.payLoad(pL);
+	db["Salman"] = demoElem;
+	demoElem.name("Jianan");
+	PayLoad pL2;
+	pL2.filePath("C:/AdditionKVDemo2.txt"); pL2.category().push_back("TA"); demoElem.payLoad(pL2);
+	db["Sun"] = demoElem;
+	PayLoad pL3;
+	pL3.filePath("C:/AdditionKVDemo3.txt"); pL3.category().push_back("TA"); demoElem.payLoad(pL3);
+	demoElem.name("Nikhil");
+	db["Prashar"] = demoElem;
+	PayLoad pL4;
+	pL4.filePath("C:/AdditionKVDemo4.txt"); pL4.category().push_back("TA"); demoElem.payLoad(pL4);
+	demoElem.name("Pranjul");
+	db["Arora"] = demoElem;
+	PayLoad pL5;
+	pL5.filePath("C:/AdditionKVDemo5.txt"); pL5.category().push_back("TA"); demoElem.payLoad(pL5);
+	demoElem.name("Akash");
+	db["Anjanappa"] = demoElem;
+	std::cout << "\n\n  after adding elements with keys: \n";
+	DbCore<PayLoad>::Keys keys = db.keys();
+	showKeys(db);
+	std::cout << "\n\n  make all the new elements children of element with key \"Fawcett\"\n";
+	db["Fawcett"].children().push_back("Salman");
+	db["Fawcett"].children().push_back("Sun");
+	db["Fawcett"].children().push_back("Prashar");
+	db["Fawcett"].children().push_back("Arora");
+	db["Fawcett"].children().push_back("Anjanappa");
+	showHeader();
+	showElem(db["Fawcett"]);
+	db["Salman"].children().push_back("Sun");
+	db["Salman"].children().push_back("Prashar");
+	db["Salman"].children().push_back("Arora");
+	db["Salman"].children().push_back("Anjanappa");
+	dbp.db() = db;
+	std::cout << "\n\n  showing all the database elements:";
+	showDb(db);
+	std::cout << "\n\n  database keys are: ";
+	showKeys(db);
+	return true;
+}
+
+bool testR4b() {
+	Utilities::title("Demonstrating Requirement #4b - deletion of key/value pairs");
+	DbProvider dbp;
+	DbCore<PayLoad> db = dbp.db();
+	if (db.deleteRecord("Sun")) {
+		dbp.db() = db;
+		putLine();
+		std::cout << "\n  showing all the database elements:";
+		showDb(db);
+		putLine();
+
+		std::cout << "\n  database keys are: ";
+		showKeys(db);
+
+		putLine();
+		return true;
+	}
+	std::cout << "\n  we cannot find the key named " << "Sun" << " to the db\n";
+	return false;
+}
+
+bool testR5a() {
+	Utilities::title("Demonstrating Requirement #4a - adding a child element to Fawcett");
+	DbProvider dbp;
+	DbCore<PayLoad> db = dbp.db();
+	if (!db.contains("Fawcett"))
+	{
+		std::cout << "\n  we cannot find the key named " << "Fawcett" << " to the db\n";
+		return false;
+	}
+	DbElement<PayLoad> childDBElement;
+	childDBElement.name("Theerut");
+	childDBElement.descrip("A grad student");
+	PayLoad pL;
+	pL.filePath("C:/AddChildDemo.txt");
+	pL.category().push_back("Student");
+	childDBElement.payLoad(pL);
+	db["Foongkiatcharoen"] = childDBElement;
+	if (!db.contains("Foongkiatcharoen"))
+		return false;
+	std::cout << "\n  after adding an element with key: " << "\"" << "Foongkiatcharoen" << "\"";
+	DbCore<PayLoad>::Keys keys = db.keys();
+	showKeys(db);
+	putLine();
+	std::cout << "\n  Adding a new child element to key " << "\"" << "Fawcett" << "\"";
+	db.addChild("Fawcett", "Foongkiatcharoen");
+	dbp.db() = db;
+	putLine();
+	showDb(db);
+	return true;
+}
+
+bool testR5b() {
+	Utilities::title("Demonstrating Requirement #5b - deletion of relationship");
+	DbProvider dbp;
+	DbCore<PayLoad> db = dbp.db();
+	if (db.deleteChild("Salman", "Nikhil")) {
+		dbp.db() = db;
+		putLine();
+		std::cout << "\n  showing all the database elements:";
+		showDb(db);
+		putLine();
+
+		std::cout << "\n  database keys are: ";
+		showKeys(db);
+
+		putLine();
+		return true;
+	}
+
+	std::cout << "\n  we cannot find the key named " << "Salman" << " to the db\n";
+	return false;
+}
+
+bool testR5c() {
+	Utilities::title("Demonstrating Requirement #3b - editing text metadata and replacing an existing value's instance with a new instance");
+	DbProvider dbp;
+	DbCore<PayLoad> db = dbp.db();
+	if (!db.contains("Fawcett"))
+	{
+		std::cout << "\n  we cannot find the key named " << "Fawcett" << " to the db\n";
+		return false;
+	}
+	std::cout << "\n\n  Editing an element with key: " << "\"" << "Fawcett" << "\"\n";
+	DbElement<PayLoad> dbElement = db["Fawcett"];
+	dbElement.descrip("The best prof");
+	PayLoad pL;
+	pL.filePath("C:/EditMetaDataDemo.txt");
+	pL.category().push_back("EditMetaDataDemo.txt");
+	dbElement.payLoad(pL);
+	db["Fawcett"] = dbElement;
+	// display the results
+	dbp.db() = db;
+	putLine();
+	std::cout << "\n  showing all the database elements:";
+	showDb(db);
+	putLine();
+
+	std::cout << "\n  database keys are: ";
+	showKeys(db);
+
+	putLine();
+	return true;
+}
+
+bool testR6()
+{
+	DbCore<PayLoad> db;
+	DbProvider dbp;
+	db = dbp.db();
+	Query<PayLoad> q(db);
+	Utilities::title("Demonstrating Requirement #6a - support queries for: ");
+	std::cout << "\n\nThe value of a specified key.\n";
+	q.showSpecifiedKey("Fawcett");
+	putLine(2);
+	Utilities::title("Demonstrating Requirement #6b - support queries for: ");
+	putLine(2);
+	std::cout << "\n\nThe children of a specified key.\n";
+	q.showChildrenOfSpecifiedKey("Salman");
+	Utilities::title("Demonstrating Requirement #6c - support queries for: ");
+	putLine(2);
+	std::cout << "\nThe set of all keys matching a specified regular-expression pattern.\n";
+	q.showMatchKey(".*a.*");
+	putLine(2);
+	Utilities::title("Demonstrating Requirement #6d - support queries for: ");
+	putLine(2);
+	return true;
+}
+
+bool testQuery()
+{
+	DbCore<PayLoad> db;
+	DbProvider dbp;
+	db = dbp.db();
+	std::cout << "\nAll keys that contain a specified string in their metadata section, where the specification is based on a regular-expression pattern.\n";
+	Query<PayLoad> q1(db);
+	Conditions<PayLoad> conds1;
+	conds1.name(".*a.*").descrip(".*E.*");
+	std::cout << "\n\nQuery command: conds1.name(\".*a.*\").descrip(\".*E.*\");\n";
+	std::cout << "\n\nQuery command: q1.select(conds1);\n";
+	q1.select(conds1);
+	putLine(2);
+	Utilities::title("Demonstrating Requirement #6e - support queries for: ");
+	putLine(2);
+	std::cout << "\nAll keys that contain values written within a specified time-date interval. If only one end of the interval is provided shall take the present as the other end of the interval.\n";
+	DateTime dt = DateTime().now();
+	DateTime::Duration dur = DateTime::makeDuration(1, 0, 0, 0);
+	Query<PayLoad> q2(db);
+	std::cout << "\n\nQuery command: q2.selectTimeInterval(dt - dur, dt + dur);\n";
+	q2.selectTimeInterval(dt - dur, dt + dur);
+	putLine(2);
+	std::cout << "\n\nQuery command: q2.selectTimeInterval(dt - dur, dt + dur);\n";
+	q2.selectDate(dt - dur);
+	Utilities::title("Demonstrating Requirement #7a - queries on the set of keys returned by a previous query");
+	putLine(2);
+	std::cout << "\n\nQuery command: conds2.name(\".*P.*\").descrip(\".*TA.*\");\n";
+	std::cout << "\n\nQuery command: q3.from(q1.keys()).select(conds2).show();\n";
+	Query<PayLoad> q3(db);
+	Conditions<PayLoad> conds2;
+	conds2.name(".*P.*").descrip(".*TA.*");
+	q3.from(q1.keys()).select(conds2).show();
+	putLine();
+	DbCore<PayLoad>::DbStore& dbs = db.dbStore();
+	Conditions<PayLoad> conds3;
+	Utilities::title("Demonstrating Requirement #7a - queries on the set of keys returned by a previous query");
+	std::cout << "\n\nQuery command: q2.from(q1.keys()).select(conds2).show();\n";
+	q2.from(q1.keys()).select(conds2).show();
+	putLine(2);
+	Utilities::title("Demonstrating Requirement #7b - queries on the union of results of one or more previous queries, e.g., an \" or \"ing of multiple queries");
+	std::cout << "\n\nQuery command: q2.keysUnion(q1.keys()).show();\n";
+	q2.keysUnion(q1.keys()).show();
+	putLine(2);
+	return true; // would not compile unless C++11
+}
+
+bool testSpecializedSelectors() {
+	DbCore<PayLoad> db;
+	DbProvider dbp;
+	db = dbp.db();
+	Query<PayLoad> q4(db);
+	Utilities::title("\n\nDemonstrating specialized selectors for common queries\n");
+	std::cout << "\n\nQuery command: q4.selectName(\".*i.*\").show();\n";
+	q4.selectName(".*i.*").show();
+	putLine(2);
+	std::cout << "\n\nQuery command: q4.selectDesc(\".*E.*\").show();\n";
+	q4.selectDesc(".*E.*").show();
+	putLine(2);
+	return true;
+}
+
+bool testXml()
+{
+	Utilities::title("Demonstrating Requirement #8a - persisting a colllection of database contents, defined by a collection of keys, to an XML file");
+	putLine(2);
+	DbCore<PayLoad> db;
+	DbProvider dbp;
+	db = dbp.db();
+	Persist<PayLoad> persist(db);
+	persist.createXml();
+	std::cout << "Persisting db to file DbXml.xml\n";
+	if (persist.saveToFile("DbXml.xml"))
+	{
+		std::cout << "\n  db saved";
+		return true;
+	}
+	std::cout << "\n  filesave failed";
+	putLine();
+	return false;
+}
+
+bool testCreateNewDbFromXmlFile()
+{
+	Utilities::title("Demonstrating Requirement #8b - creating a new db from persisted XML");
+	putLine();
+	std::cout << "\nThe database can be restored or augmented from an existing XML file\n";
+
+	DbCore<PayLoad> newDb;
+	Persist<PayLoad> persist2(newDb);
+	persist2.restoreFromFile("DbXml.xml");
+	std::cout << "\n  showing all the database elements:";
+	showDb(newDb);
+	putLine();
+
+	std::cout << "\n  database keys are: ";
+	showKeys(newDb);
+	putLine();
+	return true;
+}
+
+bool testCreateProjectPackageStructure()
+{
+	Utilities::title("Demonstrating Requirement #11 - an XML file, that describe my project's package structure and dependency relationships that can be loaded when my project is graded.\n\n");
+	std::cout << "\n\n  Creating a db element with key \"NoSqlDb\":\n";
+	DbCore<PayLoad> db;
+	DbProvider dbp;
+	dbp.db() = db;
+	db["DateTime"] = createDateTimeElement();
+	dbp.db() = db;
+	db["DbCore"] = createDbCoreElement();
+	dbp.db() = db;
+	db["Executive"] = createExecutiveElement();
+	dbp.db() = db;
+	db["Persist"] = createPersistElement();
+	dbp.db() = db;
+	db["Queries"] = createQueryElement();
+	dbp.db() = db;
+	db["StringUtilities"] = createStringUtilitiesElement();
+	dbp.db() = db;
+	db["Test"] = createTestElement();
+	dbp.db() = db;
+	db["TestUtilities"] = createTestUtilities();
+	dbp.db() = db;
+	db["XmlDocument"] = createXmlDocumentElement();
+	dbp.db() = db;
+	db["XmlUtilities"] = createXmlUtilitiesElement();
+	dbp.db() = db;
+	putLine(2);
+	showDb(db);
+	putLine(2);
+	db = addChildrenToAllElements(db);
+	dbp.db() = db;
+	showDb(db);
+	DbCore<PayLoad>::Keys keys = db.keys();
+	showKeys(db);
+	putLine();
+	Persist<PayLoad> persist(db);
+	persist.createXml();
+	std::cout << "Persisting db to file Test/ProjectPackageStructure.xml\n";
+	if (persist.saveToFile("ProjectPackageStructure.xml"))
+	{
+		std::cout << "\n  ProjectPackageStructure db saved";
+		return true;
+	}
+	std::cout << "\n  filesave failed";
+	putLine();
+}
+
